@@ -1,8 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://ciuufndxjhmnp"]
+[gd_scene load_steps=13 format=3 uid="uid://ciuufndxjhmnp"]
 
 [ext_resource type="Texture2D" uid="uid://b1i0d8yhabh0e" path="res://assets/player/player.png" id="1_7pjfp"]
 [ext_resource type="Script" path="res://Scenes/player/player.gd" id="1_kop4w"]
 [ext_resource type="PackedScene" uid="uid://b7kpf2vcvueji" path="res://Scenes/PlayerCamera/player_camera.tscn" id="3_024s4"]
+[ext_resource type="PackedScene" uid="uid://ceojjtk5b35vn" path="res://Scenes/Shooter/shooter.tscn" id="4_36evw"]
 
 [sub_resource type="Animation" id="Animation_bs1ec"]
 resource_name = "Fall"
@@ -152,3 +153,7 @@ text = "asdasd
 asd
 asd
 asd"
+
+[node name="Shooter" parent="." instance=ExtResource("4_36evw")]
+lifeSpan = 2.0
+shootDelay = 0.3

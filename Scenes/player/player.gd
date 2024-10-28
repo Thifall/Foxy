@@ -7,6 +7,7 @@ enum PlayerState { IDLE, RUN, JUMP, FALL, HURT }
 @onready var sprite_2d: Sprite2D = $Sprite2D
 @onready var debug_label: Label = $DebugLabel
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
+@onready var shooter: Shooter = $Shooter
 
 const GRAVITY: float = 690.0
 const RUN_SPEED: float = 120.0
@@ -28,7 +29,8 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 	calculate_state()
 	update_debug_label()
-		
+	if Input.is_action_just_pressed("shoot"):
+		shoot()
 		
 func update_debug_label() -> void:
 	debug_label.text = "On floor: %s\nVelocity: %.0f,%.0f\nstate: %s" % \
@@ -76,4 +78,9 @@ func set_state(newState: PlayerState) -> void:
 		PlayerState.HURT:
 			animation_player.play("Hurt")
 	
+func shoot() -> void:
+	if sprite_2d.flip_h:
+		shooter.shootRelative(Vector2(0,5), Vector2.LEFT)
+	else:
+		shooter.shootRelative(Vector2(0,5), Vector2.RIGHT)
 	
