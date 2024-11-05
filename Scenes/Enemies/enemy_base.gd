@@ -31,6 +31,7 @@ func die() -> void:
 	hide()
 	#other stuff
 	SignalManager.onCreateObject.emit(global_position, Constants.ObjectType.EXPLOSION)
+	SignalManager.onCreateObject.emit(global_position, Constants.ObjectType.PICKUP)
 	queue_free()
 
 func _on_hit_box_area_entered(area: Area2D) -> void:

@@ -4,6 +4,7 @@ const OBJECT_SCENES: Dictionary = {
 	Constants.ObjectType.BULLET_PLAYER:preload("res://Scenes/BulletBase/BulletPlayer.tscn"),
 	Constants.ObjectType.BULLET_ENEMY:preload("res://Scenes/BulletBase/BulletEnemy.tscn"),
 	Constants.ObjectType.EXPLOSION: preload("res://Scenes/Explosion/explosion.tscn"),
+	Constants.ObjectType.PICKUP: preload("res://Scenes/FruitPickUp/fruit_pick_up.tscn"),
 }
 
 # Called when the node enters the scene tree for the first time.

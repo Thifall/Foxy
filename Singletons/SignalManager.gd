@@ -4,3 +4,5 @@ signal onCreateBullet(position: Vector2, direction: Vector2, lifeSpan: float, sp
 	objectType: Constants.ObjectType)
 	
 signal onCreateObject(position: Vector2, objectType: Constants.ObjectType)
+
+signal onPickupPicked(points: int)
