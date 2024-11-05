@@ -30,7 +30,7 @@ func die() -> void:
 	set_physics_process(false)
 	hide()
 	#other stuff
-	
+	SignalManager.onCreateObject.emit(global_position, Constants.ObjectType.EXPLOSION)
 	queue_free()
 
 func _on_hit_box_area_entered(area: Area2D) -> void:
