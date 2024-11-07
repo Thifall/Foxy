@@ -20,9 +20,9 @@ func onCreateBullet(position: Vector2, direction: Vector2, lifeSpan: float, spee
 		nb.setup(position, direction, lifeSpan, speed)
 		call_deferred("add_child", nb)
 
-func onCreateObject(position: Vector2, objectType: Constants.ObjectType) -> void:
+func onCreateObject(_position: Vector2, objectType: Constants.ObjectType) -> void:
 		if !OBJECT_SCENES.has(objectType):
 			return
 		var newObject = OBJECT_SCENES[objectType].instantiate()
-		newObject.position = position
+		newObject.position = _position
 		call_deferred("add_child", newObject)

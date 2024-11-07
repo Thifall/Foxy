@@ -17,6 +17,7 @@ config/icon="res://icon.png"
 
 [autoload]
 
+SoundManager="*res://Singletons/SoundManager.gd"
 SignalManager="*res://Singletons/SignalManager.gd"
 
 [display]

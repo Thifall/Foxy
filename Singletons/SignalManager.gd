@@ -6,3 +6,5 @@ signal onCreateBullet(position: Vector2, direction: Vector2, lifeSpan: float, sp
 signal onCreateObject(position: Vector2, objectType: Constants.ObjectType)
 
 signal onPickupPicked(points: int)
+signal onGameOver
+signal onPlayerHit(lives: int)

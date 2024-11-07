@@ -8,13 +8,21 @@ enum PlayerState { IDLE, RUN, JUMP, FALL, HURT }
 @onready var debug_label: Label = $DebugLabel
 @onready var animation_player: AnimationPlayer = $AnimationPlayer
 @onready var shooter: Shooter = $Shooter
+@onready var invincibility_timer: Timer = $InvinvcibilityTimer
+@onready var invincibility_animation: AnimationPlayer = $InvinvcibilityAnimation
+@onready var hurt_timer: Timer = $HurtTimer
+@onready var sound: AudioStreamPlayer2D = $Sound
 
 const GRAVITY: float = 690.0
 const RUN_SPEED: float = 120.0
 const MAX_FALL: float = 400.0
 const JUMP_VELOCITY: float = -260.0
+const HURT_JUMP_VELOCITY: Vector2 = Vector2(0, -130)
+const OFF_SCREEN_Y_LIMIT: float = 200.0
 
 var _state: PlayerState = PlayerState.IDLE
+var _lives: int = 5
+var isInvincible: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -22,6 +30,9 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
+	
+	fallen_off()
+	
 	if !is_on_floor():
 		velocity.y += GRAVITY * delta
 		
@@ -31,12 +42,19 @@ func _physics_process(delta: float) -> void:
 	update_debug_label()
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
+
+func fallen_off() -> void:
+	if global_position.y < OFF_SCREEN_Y_LIMIT:
+		return
+	is_player_alive_after_hit(_lives)
 		
 func update_debug_label() -> void:
-	debug_label.text = "On floor: %s\nVelocity: %.0f,%.0f\nstate: %s" % \
-	[ is_on_floor(), velocity.x, velocity.y, PlayerState.keys()[_state] ]
+	debug_label.text = "On floor: %s\nVelocity: %.0f,%.0f\nstate: %s\n%d" % \
+	[ is_on_floor(), velocity.x, velocity.y, PlayerState.keys()[_state], _lives ]
 
 func get_input() -> void:
+	if _state == PlayerState.HURT:
+		return
 	velocity.x = 0
 	if Input.is_action_pressed("Left"):
 		velocity.x = -RUN_SPEED
@@ -47,10 +65,13 @@ func get_input() -> void:
 	
 	if Input.is_action_just_pressed("Jump") && is_on_floor():
 		velocity.y = JUMP_VELOCITY
+		SoundManager.play_clip(sound, SoundManager.SOUND_JUMP)
 	
 	velocity.y = clampf(velocity.y, JUMP_VELOCITY, MAX_FALL)
 
 func calculate_state() -> void:
+	if _state == PlayerState.HURT:
+		return
 	if is_on_floor():
 		if velocity.x == 0:
 			set_state(PlayerState.IDLE)
@@ -65,6 +86,11 @@ func calculate_state() -> void:
 func set_state(newState: PlayerState) -> void:
 	if newState == _state:
 		return;
+		
+	if _state == PlayerState.FALL:
+		if newState == PlayerState.IDLE or newState == PlayerState.RUN:
+			SoundManager.play_clip(sound, SoundManager.SOUND_LAND)
+	
 	_state = newState
 	match _state:
 		PlayerState.IDLE:
@@ -76,11 +102,53 @@ func set_state(newState: PlayerState) -> void:
 		PlayerState.FALL:
 			animation_player.play("Fall")
 		PlayerState.HURT:
-			animation_player.play("Hurt")
+			apply_hurt_jump()
 	
 func shoot() -> void:
 	if sprite_2d.flip_h:
 		shooter.shootRelative(Vector2(0,5), Vector2.LEFT)
 	else:
 		shooter.shootRelative(Vector2(0,5), Vector2.RIGHT)
+
+#region Player onHit
+func is_player_alive_after_hit(damage: int) -> bool:
+	_lives -= damage
+	SignalManager.onPlayerHit.emit(_lives)
+	if _lives <= 0:
+		SignalManager.onGameOver.emit()
+		set_physics_process(false)
+		print("player died")
+		return false	
+	return true
+
+func go_invincible() -> void:
+	isInvincible = true
+	invincibility_animation.play("invincibility")
+	invincibility_timer.start()
+
+func apply_hit() -> void:
+	if isInvincible:
+		return
 	
+	if !is_player_alive_after_hit(1):
+		return
+		
+	SoundManager.play_clip(sound, SoundManager.SOUND_DAMAGE)
+	go_invincible()
+	set_state(PlayerState.HURT)
+
+func _on_hitbox_area_entered(area: Area2D) -> void:
+	apply_hit()
+		
+func _on_invinvcibility_timer_timeout() -> void:
+	isInvincible = false
+	invincibility_animation.stop()
+
+func apply_hurt_jump() -> void:
+	animation_player.play("Hurt")
+	velocity = HURT_JUMP_VELOCITY
+	hurt_timer.start()
+
+func _on_hurt_timer_timeout() -> void:
+	set_state(PlayerState.IDLE)
+#endregion

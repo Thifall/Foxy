@@ -29,6 +29,7 @@ func shootRelative(relativePosition:Vector2, direction: Vector2) -> void:
 	canShoot = false
 	SignalManager.onCreateBullet.emit(global_position + relativePosition, direction, lifeSpan, speed, bulletKey)
 	shoot_timer.start()
+	SoundManager.play_clip(sound, SoundManager.SOUND_LASER)
 
 func _on_shoot_timer_timeout() -> void:
 	canShoot = true
