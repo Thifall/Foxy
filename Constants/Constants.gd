@@ -11,5 +11,5 @@ enum ObjectType {
 
 #region constants
 const PLAYER_GROUP: String = "Player"
-const MOBEABLES_GROUP: String = "Moveables"
+const MOVEABLES_GROUP: String = "Moveables"
 #endregion

@@ -6,7 +6,7 @@
 [sub_resource type="CircleShape2D" id="CircleShape2D_bjxre"]
 radius = 12.0
 
-[node name="BallSpike" type="PathFollow2D"]
+[node name="BallSpike" type="PathFollow2D" groups=["Moveables"]]
 rotates = false
 script = ExtResource("1_1wfoa")
 

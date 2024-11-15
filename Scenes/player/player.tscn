@@ -198,7 +198,8 @@ asd
 asd"
 
 [node name="Shooter" parent="." instance=ExtResource("4_36evw")]
-lifeSpan = 2.0
+speed = 200.0
+lifeSpan = 1.0
 shootDelay = 0.3
 
 [node name="Hitbox" type="Area2D" parent="."]

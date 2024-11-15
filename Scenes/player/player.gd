@@ -26,8 +26,11 @@ var isInvincible: bool = false
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
-
+	call_deferred("late_setup")
+	
+func late_setup() -> void:
+	SignalManager.onLevelStarted.emit(_lives)
+	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
 	
@@ -117,6 +120,8 @@ func is_player_alive_after_hit(damage: int) -> bool:
 	if _lives <= 0:
 		SignalManager.onGameOver.emit()
 		set_physics_process(false)
+		animation_player.stop()
+		invincibility_animation.stop()
 		print("player died")
 		return false	
 	return true

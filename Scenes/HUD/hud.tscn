@@ -1,5 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://csnw7ixg5n4pp"]
+[gd_scene load_steps=6 format=3 uid="uid://csnw7ixg5n4pp"]
 
+[ext_resource type="Script" path="res://Scenes/HUD/hud.gd" id="1_5lkxc"]
 [ext_resource type="LabelSettings" uid="uid://c57087kb6t0iv" path="res://assets/LG_white_48.tres" id="1_d3d1c"]
 [ext_resource type="Texture2D" uid="uid://nsu1a2v10j7v" path="res://assets/items/pixel heart 2.png" id="2_a4tvn"]
 [ext_resource type="LabelSettings" uid="uid://b2dyrr3deoxuq" path="res://assets/LG_blue_64.tres" id="3_sci8y"]
@@ -12,6 +13,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_5lkxc")
 
 [node name="MC" type="MarginContainer" parent="."]
 layout_mode = 1
@@ -32,7 +34,7 @@ size_flags_vertical = 0
 [node name="ScoreLabel" type="Label" parent="MC/HB"]
 layout_mode = 2
 size_flags_horizontal = 3
-text = "000"
+text = "00000"
 label_settings = ExtResource("1_d3d1c")
 
 [node name="HBHearts" type="HBoxContainer" parent="MC/HB"]

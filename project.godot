@@ -19,6 +19,7 @@ config/icon="res://icon.png"
 
 SoundManager="*res://Singletons/SoundManager.gd"
 SignalManager="*res://Singletons/SignalManager.gd"
+ScoreManager="*res://Singletons/ScoreManager.gd"
 
 [display]
 

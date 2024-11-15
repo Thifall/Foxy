@@ -29,7 +29,7 @@ func die() -> void:
 	dying = true
 	set_physics_process(false)
 	hide()
-	#other stuff
+	SignalManager.onEnemyHit.emit(Points)
 	SignalManager.onCreateObject.emit(global_position, Constants.ObjectType.EXPLOSION)
 	SignalManager.onCreateObject.emit(global_position, Constants.ObjectType.PICKUP)
 	queue_free()
