@@ -13,6 +13,13 @@ func _ready() -> void:
 	SignalManager.onGameOver.connect(on_game_over)
 	load_scores_history()
 
+func get_score_history() -> Array[int]:
+	var hs: Array[int] = []
+	for s in _scores_history:
+		if s.score > 0 : 
+			hs.push_back(int(s.score))
+	return hs
+
 func update_score(points: int) -> void:
 	_score += points
 	SignalManager.onScoreUpdated.emit(_score)
@@ -45,7 +52,6 @@ func load_scores_history() -> void:
 	else:
 		save_scores()
 	_scores_history.sort_custom(compare_scores)
-	print(_scores_history)
 	
 func compare_scores(a, b):
 	return b.score < a.score

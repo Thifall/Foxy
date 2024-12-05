@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://2mjvugn7lkuv"]
+
+[ext_resource type="PackedScene" uid="uid://8mkwia7rcjva" path="res://Scenes/Levels/level_base/level_base.tscn" id="1_xe5ly"]
+
+[node name="Level_1_grass" instance=ExtResource("1_xe5ly")]
+
+[node name="CheckPoint" parent="." index="9"]
+position = Vector2(-116, -217)

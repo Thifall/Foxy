@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://i370mixdo413"]
+
+[ext_resource type="FontFile" uid="uid://jkfpjaw0ep7u" path="res://assets/fonts/LuckiestGuy-Regular.ttf" id="1_ehh5u"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_i1454"]
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.8, 0.541176, 0.160784, 1)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_7ro8l"]
+bg_color = Color(0.6, 0.6, 0.6, 0.0117647)
+
+[node name="MenuButton" type="Button"]
+offset_right = 115.0
+offset_bottom = 20.0
+theme_override_fonts/font = ExtResource("1_ehh5u")
+theme_override_font_sizes/font_size = 19
+theme_override_styles/hover = SubResource("StyleBoxFlat_i1454")
+theme_override_styles/normal = SubResource("StyleBoxFlat_7ro8l")
+text = "PLACEHOLDER"

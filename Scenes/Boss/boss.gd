@@ -19,7 +19,6 @@ func set_invinviclbe(invincible: bool) -> void:
 	_isInvincible = invincible
 	if(invincible):
 		state_machine.travel("hit")
-	var tween = get_tree().create_tween()
 	
 func reduce_lives() -> void:
 	lives -= 1

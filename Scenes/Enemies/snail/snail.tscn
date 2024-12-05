@@ -97,8 +97,8 @@ Speed = 35.0
 sprite_frames = SubResource("SpriteFrames_nsuua")
 animation = &"Walk"
 autoplay = "Walk"
-frame = 3
-frame_progress = 0.801766
+frame = 4
+frame_progress = 0.569781
 
 [node name="CollisionShape2D" parent="HitBox" index="0"]
 position = Vector2(-1, 0)

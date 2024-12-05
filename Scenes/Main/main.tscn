@@ -1,0 +1,68 @@
+[gd_scene load_steps=5 format=3 uid="uid://big8cikvg3grb"]
+
+[ext_resource type="Script" path="res://Scenes/Main/main.gd" id="1_juehu"]
+[ext_resource type="PackedScene" uid="uid://14ccfxqrvewt" path="res://Scenes/UI_Main_Base/ui-main-base.tscn" id="2_0yt71"]
+[ext_resource type="LabelSettings" uid="uid://56dde2oind7x" path="res://assets/LG_blue_64_Outlined.tres" id="2_a25ja"]
+[ext_resource type="PackedScene" uid="uid://i370mixdo413" path="res://Scenes/MenuButton/menu_button.tscn" id="4_eat8s"]
+
+[node name="Main" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_juehu")
+
+[node name="Control" parent="." instance=ExtResource("2_0yt71")]
+layout_mode = 1
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -73.0
+offset_top = -32.0
+offset_right = 73.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer2/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+text = "FOXY"
+label_settings = ExtResource("2_a25ja")
+
+[node name="NewGameBtn" parent="MarginContainer2/VBoxContainer" instance=ExtResource("4_eat8s")]
+layout_mode = 2
+text = "NEW GAME"
+
+[node name="HighscoresBtn" parent="MarginContainer2/VBoxContainer" instance=ExtResource("4_eat8s")]
+layout_mode = 2
+text = "HIGHSCORES"
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -24.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/margin_bottom = 24
+
+[node name="GridContainer" type="GridContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+columns = 5
+
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/HighscoresBtn" to="." method="_on_highscores_btn_pressed"]
