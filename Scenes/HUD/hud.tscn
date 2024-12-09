@@ -132,3 +132,11 @@ text = "PRESS JUMP FOR MAIN MENU"
 label_settings = ExtResource("4_72tmo")
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="Sound" type="AudioStreamPlayer2D" parent="."]
+
+[node name="ContinueTimer" type="Timer" parent="."]
+wait_time = 2.0
+one_shot = true
+
+[connection signal="timeout" from="ContinueTimer" to="." method="_on_continue_timer_timeout"]

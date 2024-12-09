@@ -11,8 +11,9 @@ const TRIGGER_CONDITION: String = "parameters/conditions/on_trigger"
 @onready var bossHitBox: CollisionShape2D = $Visual/BossHitBox/CollisionShape2D
 
 var _isInvincible = false
+var _tween: Tween
 
-func _on_boss_trigger_area_entered(area: Area2D) -> void:
+func _on_boss_trigger_area_entered(_area: Area2D) -> void:
 	animation_tree[TRIGGER_CONDITION] = true
 	
 func set_invinviclbe(invincible: bool) -> void:
@@ -24,12 +25,13 @@ func reduce_lives() -> void:
 	lives -= 1
 	if lives<=0 :
 		SignalManager.onBossDefeated.emit(points)
+		_tween.kill()
 		queue_free()
 	
 func tween_hit() -> void:
-	var tween = get_tree().create_tween()
-	tween.tween_property(visual, "position", Vector2.ZERO, 1.8)
-	tween.tween_callback(set_invinviclbe.bind(false))
+	_tween = get_tree().create_tween()
+	_tween.tween_property(visual, "position", Vector2.ZERO, 1.8)
+	_tween.tween_callback(set_invinviclbe.bind(false))
 
 func take_damage() -> void:
 	if(_isInvincible):
@@ -41,5 +43,5 @@ func take_damage() -> void:
 func enable_hit_box() -> void:
 	bossHitBox.set_deferred("disabled", false)
 	
-func _on_boss_hit_box_area_entered(area: Area2D) -> void:
+func _on_boss_hit_box_area_entered(_area: Area2D) -> void:
 	take_damage()

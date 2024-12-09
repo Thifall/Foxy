@@ -5,4 +5,4 @@
 [node name="Level_1_grass" instance=ExtResource("1_xe5ly")]
 
 [node name="CheckPoint" parent="." index="9"]
-position = Vector2(-116, -217)
+position = Vector2(-120, -18)

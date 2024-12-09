@@ -15,7 +15,7 @@ func _ready() -> void:
 
 func get_score_history() -> Array[int]:
 	var hs: Array[int] = []
-	for s in _scores_history:
+	for s in _scores_history.slice(0,MAX_SCORES_COUNT):
 		if s.score > 0 : 
 			hs.push_back(int(s.score))
 	return hs

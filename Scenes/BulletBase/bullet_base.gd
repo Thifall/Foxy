@@ -15,10 +15,10 @@ func check_expired(delta: float) -> void:
 	if _lifeTime >= _lifeSpan:
 		queue_free()
 
-func setup(position: Vector2, direction: Vector2, lifeSpan: float, speed: float):
+func setup(pos: Vector2, direction: Vector2, lifeSpan: float, speed: float):
 	_direction = direction.normalized() * speed
 	_lifeSpan = lifeSpan
-	global_position = position
+	global_position = pos
 
-func _on_area_entered(area: Area2D) -> void:
+func _on_area_entered(_area: Area2D) -> void:
 	queue_free()

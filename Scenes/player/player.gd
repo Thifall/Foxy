@@ -45,7 +45,7 @@ func _physics_process(delta: float) -> void:
 	update_debug_label()
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
-
+	
 func fallen_off() -> void:
 	if global_position.y < OFF_SCREEN_Y_LIMIT:
 		return
@@ -142,7 +142,7 @@ func apply_hit() -> void:
 	go_invincible()
 	set_state(PlayerState.HURT)
 
-func _on_hitbox_area_entered(area: Area2D) -> void:
+func _on_hitbox_area_entered(_area: Area2D) -> void:
 	apply_hit()
 		
 func _on_invinvcibility_timer_timeout() -> void:

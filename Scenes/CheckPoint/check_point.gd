@@ -18,7 +18,8 @@ func on_boss_defeated(_p: int) -> void:
 	sprite_2d.show()
 	SoundManager.play_clip(sound, SoundManager.SOUND_CHECKPOINT)
 
-func _on_area_entered(area: Area2D) -> void:
+func _on_area_entered(_area: Area2D) -> void:
 	if(!_reached):
 		_reached = true
 		SoundManager.play_clip(sound, SoundManager.SOUND_WIN)
+		SignalManager.onLevelCompleted.emit()

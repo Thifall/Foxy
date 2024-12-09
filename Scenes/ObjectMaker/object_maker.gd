@@ -12,12 +12,12 @@ func _ready() -> void:
 	SignalManager.onCreateBullet.connect(onCreateBullet)
 	SignalManager.onCreateObject.connect(onCreateObject)
 
-func onCreateBullet(position: Vector2, direction: Vector2, lifeSpan: float, speed: float, 
+func onCreateBullet(pos: Vector2, direction: Vector2, lifeSpan: float, speed: float, 
 	objectType: Constants.ObjectType) -> void:
 		if !OBJECT_SCENES.has(objectType):
 			return
 		var nb: Bullet = OBJECT_SCENES[objectType].instantiate()
-		nb.setup(position, direction, lifeSpan, speed)
+		nb.setup(pos, direction, lifeSpan, speed)
 		call_deferred("add_child", nb)
 
 func onCreateObject(_position: Vector2, objectType: Constants.ObjectType) -> void:

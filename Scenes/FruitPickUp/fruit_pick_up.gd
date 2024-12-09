@@ -34,6 +34,6 @@ func _on_lifespan_timer_timeout() -> void:
 	remove_me()
 
 
-func _on_area_entered(area: Area2D) -> void:
+func _on_area_entered(_area: Area2D) -> void:
 	SignalManager.onPickupPicked.emit(POINTS)
 	remove_me()

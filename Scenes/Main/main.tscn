@@ -65,4 +65,5 @@ size_flags_horizontal = 4
 size_flags_vertical = 4
 columns = 5
 
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/NewGameBtn" to="." method="_on_new_game_btn_pressed"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/HighscoresBtn" to="." method="_on_highscores_btn_pressed"]

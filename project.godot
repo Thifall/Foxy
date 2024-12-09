@@ -21,7 +21,6 @@ SoundManager="*res://Singletons/SoundManager.gd"
 SignalManager="*res://Singletons/SignalManager.gd"
 ScoreManager="*res://Singletons/ScoreManager.gd"
 GameManager="*res://Singletons/GameManager.gd"
-AudioManager="*res://Singletons/AudioManager.gd"
 
 [display]
 
