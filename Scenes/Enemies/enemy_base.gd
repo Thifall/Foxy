@@ -16,7 +16,7 @@ func _ready() -> void:
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	fallen_off()
 	
 func fallen_off() -> void:
@@ -34,7 +34,7 @@ func die() -> void:
 	SignalManager.onCreateObject.emit(global_position, Constants.ObjectType.PICKUP)
 	queue_free()
 
-func _on_hit_box_area_entered(area: Area2D) -> void:
+func _on_hit_box_area_entered(_area: Area2D) -> void:
 	die()
 
 

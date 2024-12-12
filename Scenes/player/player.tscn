@@ -186,6 +186,7 @@ shape = SubResource("RectangleShape2D_vm2ed")
 [node name="PlayerCamera" parent="." instance=ExtResource("3_024s4")]
 
 [node name="DebugLabel" type="Label" parent="."]
+visible = false
 offset_left = -24.0
 offset_top = -59.0
 offset_right = 192.0
@@ -198,7 +199,6 @@ asd
 asd"
 
 [node name="Shooter" parent="." instance=ExtResource("4_36evw")]
-speed = 200.0
 lifeSpan = 1.0
 shootDelay = 0.3
 

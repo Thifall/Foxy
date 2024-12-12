@@ -12,11 +12,12 @@ enum PlayerState { IDLE, RUN, JUMP, FALL, HURT }
 @onready var invincibility_animation: AnimationPlayer = $InvinvcibilityAnimation
 @onready var hurt_timer: Timer = $HurtTimer
 @onready var sound: AudioStreamPlayer2D = $Sound
+@onready var player_camera: Camera2D = $PlayerCamera
 
 const GRAVITY: float = 690.0
 const RUN_SPEED: float = 120.0
 const MAX_FALL: float = 400.0
-const JUMP_VELOCITY: float = -260.0
+const JUMP_VELOCITY: float = -300.0
 const HURT_JUMP_VELOCITY: Vector2 = Vector2(0, -130)
 const OFF_SCREEN_Y_LIMIT: float = 200.0
 
@@ -46,6 +47,12 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_just_pressed("shoot"):
 		shoot()
 	
+func set_camera_limits(camera_min: Vector2, camera_max: Vector2) -> void:
+	player_camera.limit_bottom = int(camera_min.y)
+	player_camera.limit_top	 = int(camera_max.y)
+	player_camera.limit_left = int(camera_min.x)
+	player_camera.limit_right = int(camera_max.x)
+
 func fallen_off() -> void:
 	if global_position.y < OFF_SCREEN_Y_LIMIT:
 		return

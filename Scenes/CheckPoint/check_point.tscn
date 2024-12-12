@@ -91,7 +91,6 @@ monitoring = false
 script = ExtResource("1_7aype")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-visible = false
 position = Vector2(0, -32)
 texture = ExtResource("1_d1p34")
 hframes = 26
