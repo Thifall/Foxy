@@ -1,5 +1,7 @@
 extends Node2D
 
+class_name Boss
+
 const TRIGGER_CONDITION: String = "parameters/conditions/on_trigger"
 
 @export var lives: int = 2

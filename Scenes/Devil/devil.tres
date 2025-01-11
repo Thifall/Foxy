@@ -1,0 +1,43 @@
+[gd_resource type="AnimationNodeStateMachine" load_steps=9 format=3 uid="uid://dd2lm6ihot0pw"]
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_ahulm"]
+animation = &"Attack"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_hao0u"]
+animation = &"Death"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_iywkb"]
+animation = &"Hurt"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_bye7o"]
+animation = &"Idle"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_wt527"]
+animation = &"RESET"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_kn8r3"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_xs1bj"]
+switch_mode = 2
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_rf667"]
+advance_mode = 2
+
+[resource]
+states/Attack/node = SubResource("AnimationNodeAnimation_ahulm")
+states/Attack/position = Vector2(386, 186)
+states/Death/node = SubResource("AnimationNodeAnimation_hao0u")
+states/Death/position = Vector2(570, 95)
+states/End/position = Vector2(890, 95)
+states/Hurt/node = SubResource("AnimationNodeAnimation_iywkb")
+states/Hurt/position = Vector2(515, 186)
+states/Idle/node = SubResource("AnimationNodeAnimation_bye7o")
+states/Idle/position = Vector2(444, 95)
+states/RESET/node = SubResource("AnimationNodeAnimation_wt527")
+states/RESET/position = Vector2(244, 186)
+states/Start/position = Vector2(244, 95)
+transitions = ["Attack", "Idle", SubResource("AnimationNodeStateMachineTransition_kn8r3"), "Hurt", "Idle", SubResource("AnimationNodeStateMachineTransition_xs1bj"), "Start", "Idle", SubResource("AnimationNodeStateMachineTransition_rf667")]
+graph_offset = Vector2(-33, -6)

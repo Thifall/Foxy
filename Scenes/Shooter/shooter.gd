@@ -17,6 +17,7 @@ func _ready() -> void:
 	shoot_timer.wait_time = shootDelay
 
 func shoot(direction: Vector2) -> void:
+	print(direction.angle())
 	if !canShoot:
 		return		
 	canShoot = false

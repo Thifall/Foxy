@@ -5,6 +5,7 @@ const OBJECT_SCENES: Dictionary = {
 	Constants.ObjectType.BULLET_ENEMY:preload("res://Scenes/BulletBase/BulletEnemy.tscn"),
 	Constants.ObjectType.EXPLOSION: preload("res://Scenes/Explosion/explosion.tscn"),
 	Constants.ObjectType.PICKUP: preload("res://Scenes/FruitPickUp/fruit_pick_up.tscn"),
+	Constants.ObjectType.FIREBALL: preload("res://Scenes/BulletBase/fireball.tscn"),
 }
 
 # Called when the node enters the scene tree for the first time.
@@ -18,6 +19,7 @@ func onCreateBullet(pos: Vector2, direction: Vector2, lifeSpan: float, speed: fl
 			return
 		var nb: Bullet = OBJECT_SCENES[objectType].instantiate()
 		nb.setup(pos, direction, lifeSpan, speed)
+		nb.rotation = get_angle_to(direction)
 		call_deferred("add_child", nb)
 
 func onCreateObject(_position: Vector2, objectType: Constants.ObjectType) -> void:

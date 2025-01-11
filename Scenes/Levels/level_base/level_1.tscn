@@ -330,7 +330,7 @@ position = Vector2(576, -154)
 position = Vector2(788, -169)
 
 [node name="Boss" parent="." index="8"]
-position = Vector2(1350, -21)
+position = Vector2(1208, -16)
 
 [node name="CheckPoint" parent="." index="9"]
-position = Vector2(424, -160)
+position = Vector2(1304, -16)

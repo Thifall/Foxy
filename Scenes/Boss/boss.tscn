@@ -203,7 +203,7 @@ states/hit/position = Vector2(463, 200.844)
 states/pulse/node = SubResource("AnimationNodeAnimation_7lwtm")
 states/pulse/position = Vector2(569, 100)
 transitions = ["Start", "RESET", SubResource("AnimationNodeStateMachineTransition_oso2t"), "RESET", "arrive", SubResource("AnimationNodeStateMachineTransition_v68f7"), "arrive", "pulse", SubResource("AnimationNodeStateMachineTransition_orkgo"), "pulse", "attack", SubResource("AnimationNodeStateMachineTransition_f86eh"), "attack", "pulse", SubResource("AnimationNodeStateMachineTransition_rm0vg"), "hit", "pulse", SubResource("AnimationNodeStateMachineTransition_ix3o6")]
-graph_offset = Vector2(-9, -60.1557)
+graph_offset = Vector2(-111, 30)
 
 [node name="Boss" type="Node2D"]
 script = ExtResource("1_nq1dn")

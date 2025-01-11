@@ -1,0 +1,338 @@
+[gd_scene load_steps=15 format=3 uid="uid://c8gkuvof2p1hv"]
+
+[ext_resource type="Texture2D" uid="uid://bn0orspmww71c" path="res://assets/enemies/Flying Demon 2D Pixel Art/Sprites/with_outline/ATTACK.png" id="1_0ljuo"]
+[ext_resource type="Texture2D" uid="uid://dj8nsa12osujh" path="res://assets/enemies/Flying Demon 2D Pixel Art/Sprites/with_outline/DEATH.png" id="1_074b5"]
+[ext_resource type="Script" path="res://Scenes/Devil/devil.gd" id="1_ixbh5"]
+[ext_resource type="Texture2D" uid="uid://dqog3suk6sn80" path="res://assets/enemies/Flying Demon 2D Pixel Art/Sprites/with_outline/IDLE.png" id="2_b15c8"]
+[ext_resource type="Texture2D" uid="uid://cwjpq7dj4oj3p" path="res://assets/enemies/Flying Demon 2D Pixel Art/Sprites/with_outline/HURT.png" id="3_br5yu"]
+[ext_resource type="AnimationNodeStateMachine" uid="uid://dd2lm6ihot0pw" path="res://Scenes/Devil/devil.tres" id="6_55075"]
+[ext_resource type="PackedScene" uid="uid://ceojjtk5b35vn" path="res://Scenes/Shooter/shooter.tscn" id="6_k4gtv"]
+
+[sub_resource type="Animation" id="Animation_86dww"]
+resource_name = "Attack"
+length = 0.8
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/DevilHitbox/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_0ljuo")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/DevilHitbox/Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [8]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/DevilHitbox/Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6, 7]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"shoot"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_fb5i8"]
+resource_name = "Death"
+length = 0.7
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/DevilHitbox/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("1_074b5")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/DevilHitbox/Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [7]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/DevilHitbox/Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3, 4, 5, 6]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0.7),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"die"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_2optn"]
+resource_name = "Hurt"
+length = 1.6
+step = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/DevilHitbox/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_br5yu")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/DevilHitbox/Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/DevilHitbox/Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2, 0.4, 0.6, 0.8, 1, 1.2, 1.4),
+"transitions": PackedFloat32Array(3.605, 0.116629, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 1, 2, 1, 2, 3]
+}
+tracks/3/type = "method"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(1.6),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [false],
+"method": &"set_invincible"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_dfpyw"]
+resource_name = "Idle"
+length = 0.6
+loop_mode = 1
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/DevilHitbox/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_b15c8")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/DevilHitbox/Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/DevilHitbox/Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.15, 0.3, 0.45),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [0, 1, 2, 3]
+}
+
+[sub_resource type="Animation" id="Animation_pmf57"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Visuals/DevilHitbox/Sprite2D:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_b15c8")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Visuals/DevilHitbox/Sprite2D:hframes")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [4]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Visuals/DevilHitbox/Sprite2D:frame")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath(".:position")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_ey4vg"]
+resource_name = "Movement"
+length = 3.0
+step = 0.05
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1.5, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, -20), Vector2(0, -150)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_kr1tl"]
+_data = {
+"Attack": SubResource("Animation_86dww"),
+"Death": SubResource("Animation_fb5i8"),
+"Hurt": SubResource("Animation_2optn"),
+"Idle": SubResource("Animation_dfpyw"),
+"Movement_1": SubResource("Animation_ey4vg"),
+"RESET": SubResource("Animation_pmf57")
+}
+
+[node name="Devil" type="Node2D"]
+script = ExtResource("1_ixbh5")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="DevilHitbox" type="Area2D" parent="Visuals"]
+collision_layer = 4
+collision_mask = 8
+
+[node name="Sprite2D" type="Sprite2D" parent="Visuals/DevilHitbox"]
+z_index = -1
+texture = ExtResource("2_b15c8")
+hframes = 4
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Visuals/DevilHitbox"]
+scale = Vector2(3.3, 3.5)
+polygon = PackedVector2Array(-6.06061, -8.28571, -6.36364, -6.85714, -6.36364, -4.85714, -4.84848, -3.14286, -1.21212, -3.14286, 0.30303, -4, 1.21212, -5.71428, 0.606061, -7.71428, 0.606061, -8.85714, 1.81818, -8, 3.33333, -6, 3.63636, -4.28571, 3.0303, -2.28571, 1.81818, -1.14286, 2.42424, 1.14286, 1.81818, 3.42857, 2.42424, 6.28571, 0.30303, 8.28571, -2.12121, 6.57143, -5.15152, 8, -8.18182, 6.28571, -6.36364, 2.57143, -6.66667, 0, -6.9697, -1.42857, -8.48485, -3.14286, -9.09091, -4.57143, -8.18182, -7.14286, -6.66667, -8.57143)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_kr1tl")
+}
+autoplay = "Idle"
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = ExtResource("6_55075")
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="Shooting" type="Node2D" parent="."]
+
+[node name="Shooter" parent="Shooting" instance=ExtResource("6_k4gtv")]
+position = Vector2(0, 10)
+speed = 300.0
+lifeSpan = 5.0
+bulletKey = 4
+shootDelay = 1.5
+
+[node name="ShootTimer" type="Timer" parent="Shooting"]
+wait_time = 4.0
+autostart = true
+
+[connection signal="area_entered" from="Visuals/DevilHitbox" to="." method="_on_devil_hitbox_area_entered"]
+[connection signal="timeout" from="Shooting/ShootTimer" to="." method="_on_shoot_timer_timeout"]
