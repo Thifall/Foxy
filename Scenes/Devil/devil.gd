@@ -3,6 +3,7 @@ extends Node2D
 class_name Devil
 
 @export var BossLives: int = 3
+@export var BossPoints: int = 10
 
 #region OnReady
 @onready var sprite_2d: Sprite2D = $Visuals/DevilHitbox/Sprite2D
@@ -45,11 +46,15 @@ func _process(_delta: float) -> void:
 
 #region MISC
 func face_player() -> void:
-	var dir = global_position.direction_to(_playerReference.global_position)
+	if _currentPhase == PHASES.FLYING:
+		return
+	var dir = visuals.global_position.direction_to(_playerReference.global_position)
 	if (dir.x > 0):
-		sprite_2d.flip_h = true
+		sprite_2d.flip_h = true	
+		#adjust hitbox
 	else:
 		sprite_2d.flip_h = false
+		#adjust hitbox
 #endregion
 		
 #region BOSS DAMAGE
@@ -71,6 +76,8 @@ func take_damage() -> void:
 		state_machine.travel("Death")
 
 func die() -> void:	
+	SignalManager.onBossDefeated.emit(BossPoints)
+	_tween.kill()
 	queue_free()
 #endregion
 
@@ -102,7 +109,7 @@ func start_attacking_phase() -> void:
 func start_flying_phase() -> void:
 	_currentPhase = PHASES.FLYING
 	print("Devil: started flying phase")
-	fly_across()
+	fly()
 	
 
 func _on_idle_timer_timeout() -> void:
@@ -146,7 +153,33 @@ func attack() -> void:
 #endregion
 
 #region flying
+func fly() -> void:	
+	if visuals.position.x < 0:
+		fly_back()
+	else: 
+		fly_across()	
+	
 func fly_across() -> void:
-	pass
-	#_tween = get_tree().create_tween()
+	_tween = get_tree().create_tween()
+	_tween.tween_property(visuals, "position", Vector2(-15, -110), 0.1)	
+	_tween.tween_property(visuals, "position", Vector2(-30, -60), 0.2)	
+	_tween.tween_property(visuals, "position", Vector2(-45, -20), 0.2)	
+	_tween.tween_property(visuals, "position", Vector2(-100, 0), 0.2)	
+	_tween.tween_property(visuals, "position", Vector2(-155, -20), 0.2)		
+	_tween.tween_property(visuals, "position", Vector2(-170, -60), 0.2)	
+	_tween.tween_property(visuals, "position", Vector2(-185, -110), 0.2)	
+	_tween.tween_property(visuals, "position", Vector2(-200, -150), 0.1)
+	_tween.tween_callback(start_new_phase)
+	
+func fly_back() -> void:
+	_tween = get_tree().create_tween()
+	_tween.tween_property(visuals, "position", Vector2(-185, -110), 0.1)	
+	_tween.tween_property(visuals, "position", Vector2(-170, -60), 0.2)	
+	_tween.tween_property(visuals, "position", Vector2(-155, -20), 0.2)	
+	_tween.tween_property(visuals, "position", Vector2(-100, -0), 0.2)	
+	_tween.tween_property(visuals, "position", Vector2(-45, -20), 0.2)	
+	_tween.tween_property(visuals, "position", Vector2(-30, -60), 0.2)		
+	_tween.tween_property(visuals, "position", Vector2(-15, -110), 0.2)	
+	_tween.tween_property(visuals, "position", Vector2(0, -150), 0.1)	
+	_tween.tween_callback(start_new_phase)
 #endregion
