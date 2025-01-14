@@ -13,3 +13,4 @@ visible = false
 
 [node name="Devil" parent="." index="11" instance=ExtResource("2_skeos")]
 position = Vector2(104, -48)
+BossLives = 3

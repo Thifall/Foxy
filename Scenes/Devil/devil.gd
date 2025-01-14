@@ -2,31 +2,58 @@ extends Node2D
 
 class_name Devil
 
-@onready var sprite_2d: Sprite2D = $Visuals/DevilHitbox/Sprite2D
 @export var BossLives: int = 3
-@onready var shooter: Shooter = $Shooting/Shooter
-@onready var animation_tree: AnimationTree = $AnimationTree
-#@onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
 
+#region OnReady
+@onready var sprite_2d: Sprite2D = $Visuals/DevilHitbox/Sprite2D
+@onready var shooter: Shooter = $Visuals/Shooting/Shooter
+@onready var animation_tree: AnimationTree = $AnimationTree
+@onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+@onready var visuals: Node2D = $Visuals
+@onready var hitbox: CollisionPolygon2D = $Visuals/DevilHitbox/CollisionPolygon2D
+@onready var debug_label: Label = $"Visuals/debug label"
+@onready var idle_timer: Timer = $PhasesTimers/IdleTimer
+#endregion
+
+#region Vars
 var _playerReference: Player
 var _currentLife: int = 0
 var _invincible: bool = false
+var _appeared = false
+var _currentPhase: PHASES = PHASES.INIT
+var _lastActivePhase: PHASES = PHASES.FLYING
+var _attacksMade: int = 0
+var _isAttacking: bool = false
+var _tween: Tween
+#endregion
+
+enum PHASES{
+	INIT,
+	IDLE,
+	ATTACKING,
+	FLYING,
+}
 
 func _ready() -> void:
 	_currentLife = BossLives
 	_playerReference = get_tree().get_first_node_in_group(Constants.PLAYER_GROUP)
+	debug_label.text = PHASES.find_key(_currentPhase)
 
-func _physics_process(_delta: float) -> void:
+func _process(_delta: float) -> void:
 	face_player()
+	debug_label.text = PHASES.find_key(_currentPhase)
 
+#region MISC
 func face_player() -> void:
 	var dir = global_position.direction_to(_playerReference.global_position)
 	if (dir.x > 0):
 		sprite_2d.flip_h = true
 	else:
 		sprite_2d.flip_h = false
-
-func _on_devil_hitbox_area_entered(area: Area2D) -> void:
+#endregion
+		
+#region BOSS DAMAGE
+func _on_devil_hitbox_area_entered(_area: Area2D) -> void:
 	if _invincible :
 		return
 	take_damage()
@@ -36,21 +63,90 @@ func set_invincible(invincible: bool) -> void:
 
 func take_damage() -> void:
 	pass
-	#set_invincible(true)
-	#_currentLife -=1
-	#if _currentLife > 0 :
-		#state_machine.travel("Hurt")
-	#else:		
-		#state_machine.travel("Death")
-
-func shoot() -> void:
-	var dir = global_position.direction_to(_playerReference.global_position)
-	shooter.shoot(dir)  
+	set_invincible(true)
+	_currentLife -=1
+	if _currentLife > 0 :
+		state_machine.travel("Hurt")
+	else:		
+		state_machine.travel("Death")
 
 func die() -> void:	
 	queue_free()
+#endregion
 
-func _on_shoot_timer_timeout() -> void:
+#region PHASE CHANGING
+func start_new_phase() -> void:		
+	print("new phase starting...")
+	if (_currentPhase != PHASES.IDLE):
+		start_idle_phase()
+		return
+	#alternating between attack/flying	
+	if _currentPhase == PHASES.IDLE:
+		if _lastActivePhase == PHASES.ATTACKING:
+			start_flying_phase()
+		else:
+			start_attacking_phase()
+
+func start_idle_phase() -> void:
+	if(_currentPhase != PHASES.IDLE):
+		_lastActivePhase = _currentPhase
+		print("Devil: started idle phase")
+	_currentPhase = PHASES.IDLE
+	idle_timer.start()
+	
+func start_attacking_phase() -> void:
+	_currentPhase = PHASES.ATTACKING
+	attack()
+	print("Devil: started attacking phase")
+
+func start_flying_phase() -> void:
+	_currentPhase = PHASES.FLYING
+	print("Devil: started flying phase")
+	fly_across()
+	
+
+func _on_idle_timer_timeout() -> void:
+	start_new_phase()
+	
+#endregion
+
+#region INIT
+func _on_boss_trigger_area_entered(_area: Area2D) -> void:
+	if(_appeared):
+		return
+	print("Boss triggered")
+	_appeared = true
+	animation_tree["parameters/conditions/playerEnter"] = true
+func show_devil() -> void:
+	visuals.show()
+	enable_hitbox()
+
+func enable_hitbox() -> void:
+	hitbox.disabled = false
+#endregion
+
+#region attacking
+func shoot() -> void:
+	var dir = shooter.global_position.direction_to(_playerReference.global_position)
+	shooter.shoot(dir) 
+	
+func attack_finished() -> void:
+	_attacksMade += 1
+	_isAttacking = false
+	print("Devil: attacks made: %s" % str(_attacksMade))
+	if(_attacksMade >= 5):
+		start_new_phase()
+		_attacksMade = 0
+	attack()
+
+func attack() -> void:	
+	if !_isAttacking and _currentPhase == PHASES.ATTACKING:
+		_isAttacking = true
+		state_machine.travel("Attack")
+#endregion
+
+#region flying
+func fly_across() -> void:
 	pass
-	#if(state_machine.get_current_node() == "Idle"):
-		#state_machine.travel("Attack")
+	#_tween = get_tree().create_tween()
+#endregion
