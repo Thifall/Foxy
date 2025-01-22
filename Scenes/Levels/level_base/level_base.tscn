@@ -1,11 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://8mkwia7rcjva"]
+[gd_scene load_steps=8 format=4 uid="uid://8mkwia7rcjva"]
 
 [ext_resource type="Script" path="res://Scenes/Levels/level_base/level_base.gd" id="1_fkp08"]
 [ext_resource type="PackedScene" uid="uid://ciuufndxjhmnp" path="res://Scenes/player/player.tscn" id="2_00gn2"]
 [ext_resource type="TileSet" uid="uid://dcey1m7u0mrwc" path="res://Scenes/Levels/tileset.tres" id="2_r0cmd"]
 [ext_resource type="PackedScene" uid="uid://c5yyq6hrilwa" path="res://Scenes/ObjectMaker/ObjectMaker.tscn" id="3_ke24f"]
 [ext_resource type="PackedScene" uid="uid://csnw7ixg5n4pp" path="res://Scenes/HUD/hud.tscn" id="10_qj01s"]
-[ext_resource type="PackedScene" uid="uid://lhvaoda5xeij" path="res://Scenes/Boss/boss.tscn" id="12_d6nn6"]
 [ext_resource type="PackedScene" uid="uid://dyynfr7sxc04e" path="res://Scenes/CheckPoint/check_point.tscn" id="13_yk337"]
 [ext_resource type="PackedScene" uid="uid://c7j1tnecctyv4" path="res://Scenes/ScrollingBG/scrolling_bg.tscn" id="14_5xpxe"]
 
@@ -37,9 +36,6 @@ z_index = -1
 [node name="HUD" parent="CanvasLayer" instance=ExtResource("10_qj01s")]
 
 [node name="MovingPlatforms" type="Node2D" parent="."]
-
-[node name="Boss" parent="." instance=ExtResource("12_d6nn6")]
-position = Vector2(445, -26)
 
 [node name="CheckPoint" parent="." instance=ExtResource("13_yk337")]
 position = Vector2(-222, -26)
