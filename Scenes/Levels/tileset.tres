@@ -4,9 +4,15 @@
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_6vqvf"]
 texture = ExtResource("1_bpd0r")
+1:0/next_alternative_id = 2
 1:0/0 = 0
 1:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -6.85714, 8, -6.85714, 8, 0, -8, 0)
+1:0/1 = 1
+1:0/1/modulate = Color(0.642601, 0.639035, 0.616025, 1)
+1:0/1/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -6.85714, 8, -6.85714, 8, 0, -8, 0)
+1:0/1/physics_layer_0/polygon_0/one_way = true
 2:0/0 = 0
+2:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -6.85714, 8, -6.85714, 8, 8, 0, 8, 0, 5.71429, -8, 5.71429, -8, 5.71429)
 3:0/0 = 0
 4:0/0 = 0
 7:0/next_alternative_id = 2
@@ -326,6 +332,7 @@ texture = ExtResource("1_bpd0r")
 6:0/0/terrains_peering_bit/bottom_left_corner = 0
 6:0/0/terrains_peering_bit/top_right_corner = 0
 0:0/0 = 0
+0:0/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -6.85714, -8, -6.85714, 8, -6.85714, 8, 0, 0, 0, 0, 8, -8, 8)
 17:4/next_alternative_id = 2
 17:4/0 = 0
 17:4/0/physics_layer_0/polygon_0/points = PackedVector2Array(-8, -8, 8, -8, 8, 8, -8, 8)

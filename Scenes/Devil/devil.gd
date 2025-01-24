@@ -11,6 +11,7 @@ class_name Devil
 @onready var shooter: Shooter = $Visuals/Shooting/Shooter
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
+@onready var animations: AnimationPlayer = $AnimationPlayer
 @onready var visuals: Node2D = $Visuals
 @onready var hitbox: CollisionPolygon2D = $Visuals/DevilHitbox/CollisionPolygon2D
 @onready var debug_label: Label = $"Visuals/debug label"
@@ -48,7 +49,7 @@ func _ready() -> void:
 	_currentLife = BossLives
 	_playerReference = get_tree().get_first_node_in_group(Constants.PLAYER_GROUP)
 	debug_label.text = PHASES.find_key(_currentPhase)
-	
+	SignalManager.onGameOver.connect(on_game_over)
 
 func _process(_delta: float) -> void:
 	face_player()
@@ -72,6 +73,12 @@ func face_direction(fdirection: FACING_DIRECTIONS) -> void:
 		FACING_DIRECTIONS.LEFT:
 			sprite_2d.flip_h = false
 			devilHitbox.scale.x = 1
+			
+func on_game_over() -> void:
+	_currentPhase = PHASES.DEATH
+	#animations.pause()
+	animations.clear_queue()
+	animation_tree["active"] = false
 #endregion
 		
 #region BOSS DAMAGE
@@ -146,6 +153,7 @@ func _on_boss_trigger_area_entered(_area: Area2D) -> void:
 	print("Boss triggered")
 	_appeared = true
 	animation_tree["parameters/conditions/playerEnter"] = true
+	
 func show_devil() -> void:
 	visuals.show()
 	enable_hitbox()

@@ -30,7 +30,9 @@ func _ready() -> void:
 	call_deferred("late_setup")
 	
 func late_setup() -> void:
+	_lives = GameManager.get_persisted_player_health()
 	SignalManager.onLevelStarted.emit(_lives)
+	SignalManager.onLevelCompleted.connect(on_level_completed)
 	
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _physics_process(delta: float) -> void:
@@ -120,6 +122,9 @@ func shoot() -> void:
 	else:
 		shooter.shootRelative(Vector2(0,5), Vector2.RIGHT)
 
+func on_level_completed() -> void:
+	GameManager.persist_player_health(_lives)
+	
 #region Player onHit
 func is_player_alive_after_hit(damage: int) -> bool:
 	_lives -= damage

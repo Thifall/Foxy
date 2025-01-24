@@ -314,9 +314,11 @@ collision_mask = 2
 shape = SubResource("RectangleShape2D_8n3h7")
 
 [node name="Visuals" type="Node2D" parent="."]
+visible = false
 position = Vector2(0, -150)
 
 [node name="debug label" type="Label" parent="Visuals"]
+visible = false
 offset_left = -36.0
 offset_top = -56.0
 offset_right = 19.0
