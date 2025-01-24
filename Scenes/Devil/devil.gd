@@ -7,6 +7,7 @@ class_name Devil
 
 #region OnReady
 @onready var sprite_2d: Sprite2D = $Visuals/DevilHitbox/Sprite2D
+@onready var devilHitbox: CollisionPolygon2D = $Visuals/DevilHitbox/CollisionPolygon2D
 @onready var shooter: Shooter = $Visuals/Shooting/Shooter
 @onready var animation_tree: AnimationTree = $AnimationTree
 @onready var state_machine: AnimationNodeStateMachinePlayback = $AnimationTree["parameters/playback"]
@@ -28,17 +29,26 @@ var _isAttacking: bool = false
 var _tween: Tween
 #endregion
 
+#region Enums
 enum PHASES{
 	INIT,
 	IDLE,
 	ATTACKING,
 	FLYING,
+	DEATH
 }
+
+enum FACING_DIRECTIONS{
+	LEFT,
+	RIGHT,
+}
+#endregion
 
 func _ready() -> void:
 	_currentLife = BossLives
 	_playerReference = get_tree().get_first_node_in_group(Constants.PLAYER_GROUP)
 	debug_label.text = PHASES.find_key(_currentPhase)
+	
 
 func _process(_delta: float) -> void:
 	face_player()
@@ -50,16 +60,25 @@ func face_player() -> void:
 		return
 	var dir = visuals.global_position.direction_to(_playerReference.global_position)
 	if (dir.x > 0):
-		sprite_2d.flip_h = true	
-		#adjust hitbox
+		face_direction(FACING_DIRECTIONS.RIGHT)
 	else:
-		sprite_2d.flip_h = false
-		#adjust hitbox
+		face_direction(FACING_DIRECTIONS.LEFT)
+		
+func face_direction(fdirection: FACING_DIRECTIONS) -> void:
+	match fdirection:
+		FACING_DIRECTIONS.RIGHT:
+			sprite_2d.flip_h = true	
+			devilHitbox.scale.x = -1
+		FACING_DIRECTIONS.LEFT:
+			sprite_2d.flip_h = false
+			devilHitbox.scale.x = 1
 #endregion
 		
 #region BOSS DAMAGE
 func _on_devil_hitbox_area_entered(_area: Area2D) -> void:
 	if _invincible :
+		return
+	if _currentPhase == PHASES.ATTACKING:
 		return
 	take_damage()
 
@@ -72,7 +91,8 @@ func take_damage() -> void:
 	_currentLife -=1
 	if _currentLife > 0 :
 		state_machine.travel("Hurt")
-	else:		
+	else:	
+		_currentPhase = PHASES.DEATH	
 		state_machine.travel("Death")
 
 func die() -> void:	
@@ -83,7 +103,9 @@ func die() -> void:
 
 #region PHASE CHANGING
 func start_new_phase() -> void:		
-	print("new phase starting...")
+	if _currentPhase == PHASES.DEATH:
+		return
+	set_invincible(false)
 	if (_currentPhase != PHASES.IDLE):
 		start_idle_phase()
 		return
@@ -155,8 +177,10 @@ func attack() -> void:
 #region flying
 func fly() -> void:	
 	if visuals.position.x < 0:
+		face_direction(FACING_DIRECTIONS.RIGHT)
 		fly_back()
 	else: 
+		face_direction(FACING_DIRECTIONS.LEFT)
 		fly_across()	
 	
 func fly_across() -> void:

@@ -154,4 +154,4 @@ position = Vector2(321, 0)
 position = Vector2(513, -737)
 
 [node name="Devil" parent="." index="10" instance=ExtResource("8_ocgxx")]
-position = Vector2(1424, -296)
+position = Vector2(1411, -255)
