@@ -2,13 +2,15 @@ extends Node
 
 const MAIN = preload("res://Scenes/Main/main.tscn")
 const TOTAL_LEVELS: int = 2
+const PLAYER_STARTING_LIVES: int = 5
 
 var _level_scenes: Dictionary = {}
 var _current_level: int = 0
-var _persisted_player_health: int = 5;
+var _persisted_player_health: int = 5
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	SignalManager.onMainMenuLoaded.connect(on_main_menu_loaded)
 	for ln in range(1, TOTAL_LEVELS+1):
 		_level_scenes[ln] = load("res://Scenes/Levels/level_base/level_%d.tscn" % ln)
 
@@ -32,3 +34,5 @@ func set_next_level() -> void:
 	if _current_level > TOTAL_LEVELS:
 		_current_level = 1
 	
+func on_main_menu_loaded() -> void:
+	persist_player_health(PLAYER_STARTING_LIVES)
